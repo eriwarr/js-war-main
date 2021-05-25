@@ -66,7 +66,7 @@ Game.prototype.start = function() {
   this.pot= [];
 
 
-
+// While the players have cards, run the compareCard function//
   while(this.player1.hand.length > 0 && this.player2.hand.length > 0) {
     this.compareCard();
 
@@ -74,7 +74,7 @@ Game.prototype.start = function() {
 
 }
 
-
+//compareCard function evaluates each card and determines who wins the round//
 Game.prototype.compareCard = function(){
   var player1Card = game.player1.hand[game.player1.hand.length - 1];
   var player2Card = game.player2.hand[game.player2.hand.length - 1];
@@ -82,8 +82,8 @@ Game.prototype.compareCard = function(){
 
 
   if (player1Card.number > player2Card.number) {
-    console.log(`${player1} has a ${player1Card.number}, while ${player2} has a ${player2Card.number} ${player1} wins!`)
-    //Adds player's 2 card to the front of player1's deck//
+    console.log(`${player1} threw out a ${player1Card.number}. ${player2} threw out a ${player2Card.number}. ${player1} takes the cards. ${player1} has ${game.player1.hand.length} cards.`);
+    //Adds player2's card to the front of player1's deck//
     game.player1.hand.unshift(player2Card);
     //Removes the last card from player1's deck//
     x = game.player1.hand.pop();
@@ -92,31 +92,32 @@ Game.prototype.compareCard = function(){
     //Removes the card removes the card from player2's deck//
     game.player2.hand.pop();
   } else if (player1Card.number < player2Card.number) {
-    console.log(`${player2} has a ${player2Card.number}, while ${player1} has a ${player1Card.number} ${player2} wins!`)
+    console.log(`${player2} threw out a ${player2Card.number}. ${player1} threw out a ${player1Card.number}. ${player2} takes the cards. ${player2} has ${game.player2.hand.length} cards.`);
     game.player2.hand.unshift(player1Card);
     x = game.player2.hand.pop();
     game.player2.hand.unshift(x);
     game.player1.hand.pop();
 
   } else if (player1Card.number === player2Card.number) {
-    console.log('its a tie')
-    for(i = 0; i < 3; i++){
+    console.log(`IT'S WAR BABY!`)
+    for(i = 0; i < 4; i++){
     x = game.player1.hand.pop();
     y = game.player2.hand.pop();
       game.pot.push(x);
       game.pot.push(y);
 
     }
-    if(game.pot[4].number > game.pot[5].number){
-      console.log('player1 should take it');
+    if(game.pot[5].number > game.pot[6].number){
+      console.log(`I DECLARE THAT....${player1} wins the WAR`);
       game.player1.hand.push(game.pot[0], game.pot[1], game.pot[2], game.pot[3], game.pot[4], game.pot[5]);
       game.pot = [];
-    } else if(game.pot[4].number < game.pot[5].number) {
-      console.log('player2 should take it');
+    } else if(game.pot[5].number < game.pot[6].number) {
+      console.log(`I DECLARE THAT....${player2} wins the WAR`);
       game.player2.hand.push(game.pot[0], game.pot[1], game.pot[2], game.pot[3], game.pot[4], game.pot[5]);
       game.pot = [];
-    } else if (game.pot[4].number === game.pot[5].number){
-        console.log('tie again')
+    } else if (game.pot[5].number === game.pot[6].number){
+        this.compareCard();
+        game.pot = [];
     }
 
   }
@@ -126,10 +127,14 @@ Game.prototype.compareCard = function(){
 game = new Game();
 game.start();
 
-console.log(game.player1.hand.length);
-console.log(game.player2.hand.length);
 
 
+if (game.player1.hand.length > game.player2.hand.length){
+  alert(`${player1} wins!!!!!!`);
+}
+if (game.player1.hand.length < game.player2.hand.length){
+  alert(`${player2} wins!!!!!!`);
+}
 
 // // Mady's Solution//
 //
