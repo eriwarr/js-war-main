@@ -66,10 +66,10 @@ Game.prototype.start = function() {
   this.pot= [];
 
 
-  let i = 56;
-  while(this.player1.hand.length > 0 && this.player2.hand.length > 0 && i > 0) {
+
+  while(this.player1.hand.length > 0 && this.player2.hand.length > 0) {
     this.compareCard();
-    i--;
+
   }
 
 }
@@ -100,11 +100,24 @@ Game.prototype.compareCard = function(){
 
   } else if (player1Card.number === player2Card.number) {
     console.log('its a tie')
-
+    for(i = 0; i < 3; i++){
     x = game.player1.hand.pop();
     y = game.player2.hand.pop();
       game.pot.push(x);
       game.pot.push(y);
+
+    }
+    if(game.pot[4].number > game.pot[5].number){
+      console.log('player1 should take it');
+      game.player1.hand.push(game.pot[0], game.pot[1], game.pot[2], game.pot[3], game.pot[4], game.pot[5]);
+      game.pot = [];
+    } else if(game.pot[4].number < game.pot[5].number) {
+      console.log('player2 should take it');
+      game.player2.hand.push(game.pot[0], game.pot[1], game.pot[2], game.pot[3], game.pot[4], game.pot[5]);
+      game.pot = [];
+    } else if (game.pot[4].number === game.pot[5].number){
+        console.log('tie again')
+    }
 
   }
 
@@ -113,8 +126,8 @@ Game.prototype.compareCard = function(){
 game = new Game();
 game.start();
 
-console.log(game.pot)
-
+console.log(game.player1.hand.length);
+console.log(game.player2.hand.length);
 
 
 
